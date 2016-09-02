@@ -10,7 +10,7 @@ function makeRequest() {
           "features":
           [
             {
-              "maxResults": 5,
+              "maxResults": 100,
               "type": "TEXT_DETECTION"
             }
           ]
