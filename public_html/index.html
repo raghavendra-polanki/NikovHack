@@ -4,8 +4,11 @@
 	<head>
 		<title>Kalashnikov</title>
 		<meta charset='utf-8'>
-		<link rel="stylesheet" href="main.css" type="text/css" media="all">
-		<script src="jquery-3.1.0.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel='stylesheet' href='css/main.css'>
+
+        <script src="jquery-3.1.0.min.js"></script>
 		<script src="capture.js"></script>
 		<script src="request.js"></script>
 		<script src="sanitize.js"></script>
@@ -13,29 +16,23 @@
 	</head>
 
 	<body>
-		<div class="contentarea">
-			<h1>
-				Kalashnikov
-			</h1>
-
-			<p>
-				Setting up a media stream using built-in webcam,
-				fetching an image from that stream, and createing a PNG using that image.
-			</p>
-
-			<div class="camera">
-				<video id="video">Video stream not available.</video>
-				<button id="startbutton">Take photo</button>
-			</div>
-
-			<canvas id="canvas">
-			</canvas>
-
-			<div class="output">
-				<img id="photo" onchange="console.log('Hola!')" alt="The screen capture will appear in this box.">
-			</div>
-
-			<button onclick="hitAPI()">Click me</button>
+		<div class="camera">
+            <h1>Take photo</h1>
+			<video class="camera-view" id="video">Video stream not available.</video>
+			<button class="camera-capture-button" id="startbutton"></button>
 		</div>
+
+        <div class="camera-result-wrapper">
+    		<canvas class="camera-result" id="canvas"></canvas>
+
+            <button class="camera-data-retake camera-data-button" onclick="resetCamera()">Retake</button>
+            <button class="camera-data-submit camera-data-button" onclick="hitAPI()">Submit</button>
+
+    		<div class="output">
+    			<img id="photo" onchange="console.log('Hola!')" alt="The screen capture will appear in this box.">
+    		</div>
+        </div>
+
+		<!-- <button onclick="hitAPI()">Click me</button> -->
 	</body>
 </html>
