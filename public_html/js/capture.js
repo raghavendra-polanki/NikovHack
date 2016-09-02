@@ -113,3 +113,7 @@
   // once loading is complete.
   window.addEventListener('load', startup, false);
 })();
+
+function resetCamera() {
+    $(".camera-result-wrapper").hide();
+}
