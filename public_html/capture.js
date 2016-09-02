@@ -70,6 +70,7 @@
 
     startbutton.addEventListener('click', function(ev){
       takepicture();
+      $(".camera-result-wrapper").show();
       ev.preventDefault();
     }, false);
 

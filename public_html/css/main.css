@@ -1,0 +1,88 @@
+@font-face {
+    font-family: "Comfortaa Regular";
+    src: url(../fonts/Comfortaa-Regular.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: "Comfortaa Regular", arial, sans-serif;
+    background-color: #ea9f34;
+}
+
+.camera {
+    width: 100%;
+    height: 100%;
+
+    background-color: #333;
+}
+
+h1 {
+    padding: 15px 0;
+    height: 50px;
+    background-color: #fff;
+    text-align: center;
+}
+
+.camera-view {
+    width: 100%;
+    height: calc(100% - 40px);
+}
+
+.camera-capture-button {
+    position: fixed;
+    bottom: 50px;
+    left: calc(50% - 30px);
+
+    width: 60px;
+    height: 60px;
+
+    background-color: #aaa;
+
+    border-radius: 50%;
+    border: 4px solid #fff;
+    cursor: pointer;
+}
+
+.camera-result-wrapper {
+    z-index: 2;
+    display: none;
+}
+
+.camera-result {
+    position: fixed;
+    left: 0;
+    top: 50px;
+    width: 100%;
+    height: calc(100% - 100px);
+
+    /*background-color: red;*/
+}
+
+.camera-data-button {
+    position: fixed;
+    bottom: 0;
+    width: 50%;
+    height: 50px;
+    border: none;
+}
+
+.camera-data-submit {
+    left: 0;
+    background-color: #ea9f34;
+}
+
+.camera-data-retake {
+    right: 0;
+    background-color: #fff;
+}
