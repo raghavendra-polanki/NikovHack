@@ -7,71 +7,9 @@
 		<link rel="stylesheet" href="main.css" type="text/css" media="all">
 		<script src="jquery-3.1.0.min.js"></script>
 		<script src="capture.js"></script>
-		<script>
-		// window.setInterval(function() {
-		// 	console.log($("#photo").attr("src"));
-		// }, 2000);
-		// window.onload = function() { console.log($("h1").html()) }
-		$(function() {
-			// $('#photo').attr('src') = "hello";
-			// $('#photo').on('load', function () {
-			// 	console.log($('#photo').attr('src'));
-			// });
-			// $("h1").html("Dummy h1");
-		});
-
-		function hitAPI() {
-			var url = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAPHpiTbAzrx8_BmyuitgkJpEvj8JibCJc";
-			// url = "/api";
-
-			console.log($('#photo').attr('src'));
-
-			var b64 = $('#photo').attr('src').replace("data:image/jpeg;base64,", "");
-			console.log(b64);
-
-			var img_data = {
-				"requests": [
-					{
-						"image": {
-							"content": b64
-						},
-						"features": [
-							{
-								"type": "TYPE_UNSPECIFIED",
-								"maxResults": 5
-							}
-						]
-					}
-				]
-			};
-
-			// console.log(img_data);
-
-			// console.log($('#photo').attr('src').replace("data:image/png;base64,", ""));
-
-			$.ajax({
-				type: "POST",
-				url: url,
-				data: img_data,
-				success: function(data) {
-					console.log("Success");
-					console.log(data);
-				},
-				error: function(data) {
-					console.log("Error");
-					console.log(data);
-				},
-				dataType: "json",
-				headers: {
-					"Content-Type": "application/json",
-					"Content-Length": 3495
-					// "Access-Control-Allow-Origin": "http://localhost:8000",
-					// "Access-Control-Allow-Origin": "*",
-					// "x-frame-options": "SAMEORIGIN"
-				}
-			});
-		}
-		</script>
+		<script src="request.js"></script>
+		<script src="sanitize.js"></script>
+		<script src="https://apis.google.com/js/api.js"></script>
 	</head>
 
 	<body>
