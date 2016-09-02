@@ -6,13 +6,10 @@
 		<meta charset='utf-8'>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel='stylesheet' href='css/main.css'>
+		<link rel='stylesheet' href='css/main.css'>
+        <link rel='stylesheet' href='css/property-details.css'>
 
         <script src="js/jquery-3.1.0.min.js"></script>
-		<script src="js/capture.js"></script>
-		<script src="js/request.js"></script>
-		<script src="js/sanitize.js"></script>
-		<script src="https://apis.google.com/js/api.js"></script>
 	</head>
 
 	<body>
@@ -22,15 +19,7 @@
 			<button class="camera-capture-button" id="startbutton"></button>
 		</div>
 
-        <div class="camera-result-wrapper">
-    		<canvas class="camera-result" id="canvas"></canvas>
-
-            <button class="camera-data-retake camera-data-button" onclick="resetCamera()">Retake</button>
-            <button class="camera-data-submit camera-data-button" onclick="hitAPI()">Submit</button>
-
-    		<div class="output">
-    			<img id="photo" alt="The screen capture will appear in this box.">
-    		</div>
-        </div>
+		<div class="property-container">
+		</div>
 	</body>
 </html>
