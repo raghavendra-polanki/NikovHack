@@ -21,19 +21,33 @@
 		});
 
 		function hitAPI() {
-			var url = "https://vision.googleapis.com/v1/images:annotate";
+			var url = "https://vision.googleapis.com/v1/images:annotate?key=AIzaSyAPHpiTbAzrx8_BmyuitgkJpEvj8JibCJc";
+			// url = "/api";
+
+			console.log($('#photo').attr('src'));
+
+			var b64 = $('#photo').attr('src').replace("data:image/jpeg;base64,", "");
+			console.log(b64);
 
 			var img_data = {
-				"image": {
-					"content": $('#photo').attr('src').replace("data:image/jpeg;base64,", "")
-				},
-				"features": [
+				"requests": [
 					{
-						"type": "TYPE_UNSPECIFIED",
-						"maxResults": 5
+						"image": {
+							"content": b64
+						},
+						"features": [
+							{
+								"type": "TYPE_UNSPECIFIED",
+								"maxResults": 5
+							}
+						]
 					}
 				]
-			}
+			};
+
+			// console.log(img_data);
+
+			// console.log($('#photo').attr('src').replace("data:image/png;base64,", ""));
 
 			$.ajax({
 				type: "POST",
@@ -50,8 +64,10 @@
 				dataType: "json",
 				headers: {
 					"Content-Type": "application/json",
+					"Content-Length": 3495
 					// "Access-Control-Allow-Origin": "http://localhost:8000",
-					"Access-Control-Allow-Origin": "*"
+					// "Access-Control-Allow-Origin": "*",
+					// "x-frame-options": "SAMEORIGIN"
 				}
 			});
 		}
