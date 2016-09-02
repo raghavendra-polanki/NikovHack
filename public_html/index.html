@@ -1,32 +1,87 @@
 <!doctype html>
 <html>
-<head>
-	<title>WebRTC: Still photo capture demo</title>
-	<meta charset='utf-8'>
-	<link rel="stylesheet" href="main.css" type="text/css" media="all">
-	<script src="capture.js">
-	</script>
-</head>
-<body>
-<div class="contentarea">
-	<h1>
-		MDN - WebRTC: Still photo capture demo
-	</h1>
-	<p>
-		This example demonstrates how to set up a media stream using your built-in webcam, fetch an image from that stream, and create a PNG using that image.
-	</p>
-  <div class="camera">
-    <video id="video">Video stream not available.</video>
-    <button id="startbutton">Take photo</button> 
-  </div>
-  <canvas id="canvas">
-  </canvas>
-  <div class="output">
-    <img id="photo" alt="The screen capture will appear in this box."> 
-  </div>
-	<p>
-		Visit our article <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Taking_still_photos"> Taking still photos with WebRTC</a> to learn more about the technologies used here.
-	</p>
-</div>
-</body>
+
+	<head>
+		<title>Kalashnikov</title>
+		<meta charset='utf-8'>
+		<link rel="stylesheet" href="main.css" type="text/css" media="all">
+		<script src="jquery-3.1.0.min.js"></script>
+		<script src="capture.js"></script>
+		<script>
+		// window.setInterval(function() {
+		// 	console.log($("#photo").attr("src"));
+		// }, 2000);
+		// window.onload = function() { console.log($("h1").html()) }
+		$(function() {
+			// $('#photo').attr('src') = "hello";
+			// $('#photo').on('load', function () {
+			// 	console.log($('#photo').attr('src'));
+			// });
+			// $("h1").html("Dummy h1");
+		});
+
+		function hitAPI() {
+			var url = "https://vision.googleapis.com/v1/images:annotate";
+
+			var img_data = {
+				"image": {
+					"content": $('#photo').attr('src').replace("data:image/jpeg;base64,", "")
+				},
+				"features": [
+					{
+						"type": "TYPE_UNSPECIFIED",
+						"maxResults": 5
+					}
+				]
+			}
+
+			$.ajax({
+				type: "POST",
+				url: url,
+				data: img_data,
+				success: function(data) {
+					console.log("Success");
+					console.log(data);
+				},
+				error: function(data) {
+					console.log("Error");
+					console.log(data);
+				},
+				dataType: "json",
+				headers: {
+					"Content-Type": "application/json",
+					// "Access-Control-Allow-Origin": "http://localhost:8000",
+					"Access-Control-Allow-Origin": "*"
+				}
+			});
+		}
+		</script>
+	</head>
+
+	<body>
+		<div class="contentarea">
+			<h1>
+				Kalashnikov
+			</h1>
+
+			<p>
+				Setting up a media stream using built-in webcam,
+				fetching an image from that stream, and createing a PNG using that image.
+			</p>
+
+			<div class="camera">
+				<video id="video">Video stream not available.</video>
+				<button id="startbutton">Take photo</button>
+			</div>
+
+			<canvas id="canvas">
+			</canvas>
+
+			<div class="output">
+				<img id="photo" onchange="console.log('Hola!')" alt="The screen capture will appear in this box.">
+			</div>
+
+			<button onclick="hitAPI()">Click me</button>
+		</div>
+	</body>
 </html>
