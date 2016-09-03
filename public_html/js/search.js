@@ -6,7 +6,7 @@ g_searchResponseIndex = 0;
 g_totalSearchResponses = 0;
 
 function CTextObject(){
- 
+
     this.m_strText = "";
     this.m_cBoundingCoordinates = [];
     this.m_rHeight = 0;
@@ -22,26 +22,26 @@ function CProjectObject(){
 function sanitize (data) {
    var scannedJson = JSON.parse(data.body);
    var textAnnotations = scannedJson.responses[0].textAnnotations;
-   
+
    g_scannedText = [];
    g_scannedTextBuilderPairs = { };
    g_scannedTextProjectPairs = { };
    g_searchResponseIndex = 0;
-   g_totalSearchResponses = 0;   
-   
+   g_totalSearchResponses = 0;
+
    if(textAnnotations == null)
    {
-       alert("No Text recognized");
+       throwError("No Text recognized");
        return;
    }
    console.log(textAnnotations[0].description);
-   
+
    var maxHeight = 0;
-   
+
    for(var index = 0; index < textAnnotations.length; index++){
     if(textAnnotations[index].description.length > 0){
-        
-      
+
+
         if(textAnnotations[index].description.toLowerCase() != "sector"
                 && textAnnotations[index].description.toLowerCase() != "noida"
                 && textAnnotations[index].description.toLowerCase() != "gurgaon"){
@@ -60,31 +60,31 @@ function sanitize (data) {
         }
     }
     }
-    
+
 //    g_scannedText = g_scannedText.filter( function( item, index, inputArray ) {
 //       return inputArray.indexOf(item) == index;
-//    });     
-   
+//    });
+
    var heightFilteredText = [];
    heightFilteredText.push(g_scannedText[0]);
    for(var wordIndex = 1; wordIndex < g_scannedText.length; wordIndex++){
        if(g_scannedText[wordIndex].m_rHeight > 0.0 * maxHeight){
            heightFilteredText.push(g_scannedText[wordIndex]);
        }
-   }   
-   
+   }
+
    g_scannedText = heightFilteredText;
-   
-   alert(g_scannedText.length + ":\n" + g_scannedText[0].m_strText);
+
+   // alert(g_scannedText.length + ":\n" + g_scannedText[0].m_strText);
    console.log(g_scannedText.length);
    console.log(g_scannedText[0].m_strText);
-   
+
    g_totalSearchResponses = g_scannedText.length - 1;
-   
+
    for(var wordIndex = 1; wordIndex < g_scannedText.length; wordIndex++){
        searchProjectInMakan(g_scannedText[wordIndex].m_strText);
    }
-   
+
 }
 
 function talkToMakan() {
@@ -113,9 +113,9 @@ function searchBuilderInMakan(query) {
         url: url,
         data: "",
         success: function(response) {
-            
+
             g_searchResponseIndex++;
-            
+
             var data = response.data;
             if(data.length > 0){
                 g_scannedTextBuilderPairs[query] = [];
@@ -130,23 +130,23 @@ function searchBuilderInMakan(query) {
                      g_scannedTextBuilderPairs[query].push(projObject);
 
                 }
-                               
+
             }
-            
+
             if(g_searchResponseIndex == g_totalSearchResponses)
             {
                 g_searchResponseIndex = 0;
                 onBuilderSearchFinish();
                 //onProjectSearchFinish();
             }
-            
-            
+
+
         }
     });
 }
 
 function onBuilderSearchFinish(){
-    
+
         var alertString = "";
        for(var wordIndex = 1; wordIndex < g_scannedText.length; wordIndex++){
             var query = g_scannedText[wordIndex].m_strText;
@@ -162,13 +162,13 @@ function onBuilderSearchFinish(){
             }
             }
         }
-        
+
         for(var wordIndex = 1; wordIndex < g_scannedText.length; wordIndex++){
             searchProjectInMakan(g_scannedText[wordIndex].m_strText);
-        }        
-        
+        }
+
         console.log(alertString);
-        alert(alertString); 
+        // alert(alertString);
 }
 
 function searchProjectInMakan(query) {
@@ -181,9 +181,9 @@ function searchProjectInMakan(query) {
         url: url,
         data: "",
         success: function(response) {
-            
+
             g_searchResponseIndex++;
-            
+
             var data = response.data;
             if(data.length > 0){
                 g_scannedTextProjectPairs[query] = [];
@@ -198,21 +198,21 @@ function searchProjectInMakan(query) {
                      g_scannedTextProjectPairs[query].push(projObject);
 
                 }
-                               
+
             }
-            
+
             if(g_searchResponseIndex == g_totalSearchResponses)
             {
                 onProjectSearchFinish();
             }
-            
-            
+
+
         }
     });
 }
 
 function onProjectSearchFinish(){
-    
+
         var alertString = "";
        for(var wordIndex = 1; wordIndex < g_scannedText.length; wordIndex++){
             var query = g_scannedText[wordIndex].m_strText;
@@ -229,25 +229,25 @@ function onProjectSearchFinish(){
             }
         }
         console.log(alertString);
-        alert("ProjectSearch finished")
-        //alert(alertString); 
-        
+        // alert("ProjectSearch finished")
+        //alert(alertString);
+
         //matchBuilderAndProject();
         //matchProjectToProject();
         matchBuilderProjectTogether();
 }
 
 function matchBuilderProjectTogether(){
-    
+
         var builderArray = [];
         var projectArray = [];
-        
+
         for(var query in g_scannedTextProjectPairs){
-        
-            var projData = g_scannedTextProjectPairs[query]; 
-         loop2 :   
+
+            var projData = g_scannedTextProjectPairs[query];
+         loop2 :
              for(var projDataIndex = 0; projDataIndex < projData.length; projDataIndex++){
-                 
+
                  if(projData[projDataIndex].m_builderName.toLowerCase() === query.toLowerCase())
                  {
                      builderArray.push(projData[projDataIndex].m_builderName);
@@ -267,7 +267,7 @@ function matchBuilderProjectTogether(){
 //                             projectArray.push(projData[projDataIndex]);
 //                             break loop2;
 //                         }
-//                     }                     
+//                     }
                  }
              }
          }
@@ -277,23 +277,23 @@ function matchBuilderProjectTogether(){
          }
 
          var projectAlert = "Projects : \n";
-         
+
          for(var projectIndex = 0; projectIndex < projectArray.length; projectIndex++){
              projectAlert += projectArray[projectIndex].m_entityName + "\n";
-         }         
-         
-         alert(builderAlert);
+         }
+
+        //  alert(builderAlert);
          console.log(builderAlert);
-         
-        alert(projectAlert);
+
+        // alert(projectAlert);
         console.log(projectAlert);
-        
+
         var finalArray = [];
-        
+
         if(builderArray.length == 0){
-            
+
             finalArray = projectArray;
-            
+
         }else{
             for(var builderIndex = 0; builderIndex < builderArray.length; builderIndex++){
                 for(var projectIndex = 0; projectIndex < projectArray.length; projectIndex++){
@@ -304,44 +304,47 @@ function matchBuilderProjectTogether(){
 
             }
         }
-        
+
         var finalProjectAlert = "Final Projects : \n";
         for(var projectIndex = 0; projectIndex < finalArray.length; projectIndex++){
             finalProjectAlert += finalArray[projectIndex].m_builderName + " " +finalArray[projectIndex].m_entityName + "\n";
         }
-        
-       alert(finalProjectAlert);
-       console.log(finalProjectAlert);        
-    
+
+    //    alert(finalProjectAlert);
+       console.log(finalProjectAlert);
+
+       if(finalArray.length == 0) throwError("No projects found");
+       else loadDetails(finalArray);
+
 }
 
 
 function matchBuilderAndProject(){
-    
+
     for(var query in g_scannedTextProjectPairs){
-        
+
         var projData = g_scannedTextProjectPairs[query];
-        
+
         for(var projDataIndex = 0; projDataIndex < projData.length; projDataIndex++){
-            
+
             var projBuilder = projData[projDataIndex].m_builderName;
-            
+
             for(var builderQuery in g_scannedTextBuilderPairs){
-                
+
                 var builderData = g_scannedTextBuilderPairs[builderQuery];
-                
+
                 for(var builderDataIndex = 0; builderDataIndex < builderData.length; builderDataIndex++){
-                    
+
                     if(projBuilder === builderData[builderDataIndex].m_builderName)
                     {
                         var result = builderData[builderDataIndex].m_builderName + " : " + projData[projDataIndex].m_entityName;
-                        
-                        alert(result);
+
+                        // alert(result);
                         console.log(result);
                     }
-                    
+
                 }
-                
+
             }
 
         }
@@ -349,34 +352,34 @@ function matchBuilderAndProject(){
 }
 
 function matchProjectToProject(){
-    
+
     for(var projQuery1 in g_scannedTextProjectPairs){
-        
+
         var projData1 = g_scannedTextProjectPairs[projQuery1];
-        
+
         for(var projData1Index = 0; projData1Index < projData1.length; projData1Index++){
-            
+
             var projName = projData1[projData1Index].m_entityName;
-            
+
             for(var projQuery2 in g_scannedTextProjectPairs){
 
                 if(projQuery2 != projQuery1){
                 var projData2 = g_scannedTextProjectPairs[projQuery2];
 
-                for(var projData2Index = 0; projData2Index < projData2.length; projData2Index++){  
-                    
+                for(var projData2Index = 0; projData2Index < projData2.length; projData2Index++){
+
                     if(projName === projData2[projData2Index].m_entityName){
                         var result = projData2[projData2Index].m_builderName + " : " + projData2[projData2Index].m_entityName;
-                        
-                        alert(result);
+
+                        // alert(result);
                         console.log(result);
                     }
-                    
-                }   
+
+                }
             }
             }
-            
-        }   
+
+        }
     }
-    
+
 }

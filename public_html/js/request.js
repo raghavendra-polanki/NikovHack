@@ -31,4 +31,4 @@ function init() {
     gapi.client.load('vision').then(makeRequest);
 }
 
-function hitAPI() { gapi.load('client', init); }
+function hitAPI() { $(".loading-screen").fadeIn(100); gapi.load('client', init); }

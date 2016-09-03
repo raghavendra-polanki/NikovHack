@@ -1,3 +1,19 @@
+.loading-screen {
+    position: fixed;
+    left: 20%;
+    top: 45%;
+
+    padding: 5px 0;
+    width: 60%;
+
+    color: #fff;
+    text-align: center;
+    background-color: #555;
+
+    z-index: +3;
+    display: none;
+}
+
 .property-container {
     position: fixed;
     left: 0;
@@ -8,7 +24,7 @@
 
     z-index: 5;
 
-    /*display: none;*/
+    display: none;
 }
 
 .property-container h1 .header-link {
@@ -87,7 +103,10 @@
     display: block;
 }
 .property-basics>.detail.title {
+    margin-bottom: 5px;
+
     font-size: 1.1em;
+    line-height: 1.2em;
 }
 
 .property-price-tag {
@@ -210,7 +229,7 @@
     width: 100%;
     height: 28%;
 
-    background-color: blue;
+    background-color: #555;
 
     border-top: 2px solid #eee;
     border-bottom: 2px solid #eee;
@@ -396,4 +415,30 @@
 
     background-color: #ea9f34;
     float: left;
+}
+
+
+/* Error modal */
+
+.error {
+    background-color: #444;
+    z-index: +11;
+    display: none;
+}
+
+.error .tab {
+    height: 100%;
+}
+
+.error .tab .text {
+    position: absolute;
+    left: 20%;
+    bottom: 50%;
+
+    padding: 10px 0;
+    width: 60%;
+
+    color: #fff;
+    text-align: center;
+    background-color: #ea9f34;
 }

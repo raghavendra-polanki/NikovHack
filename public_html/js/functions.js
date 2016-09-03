@@ -26,3 +26,19 @@ function switchToTab(id) {
     $(".tab-controller-wrapper span").removeClass('filled');
     $(".tab-controller-wrapper span:nth-of-type(" + id + ")").addClass('filled');
 }
+
+function throwError(msg) {
+    $(".error h1").html(msg);
+    $(".error").fadeIn(100);
+}
+
+function loadDetails(data) {
+    // console.log($("#property").html());
+    // console.log("Project details div loaded...");
+    // console.log(data);
+    $("#property .property-basics .title").html(data[0].m_builderName + " " + data[0].m_entityName);
+    $("#property .property-basics .entity").html("Makaan ID: " + data[0].m_entityID);
+    $("#property .property-basics .address").html(data[0].m_city);
+
+    $("#property").fadeIn(200);
+}
