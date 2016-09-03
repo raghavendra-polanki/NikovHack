@@ -75,7 +75,7 @@ function sanitize (data) {
 
    g_scannedText = heightFilteredText;
 
-   // alert(g_scannedText.length + ":\n" + g_scannedText[0].m_strText);
+   alert(g_scannedText.length + ":\n" + g_scannedText[0].m_strText);
    console.log(g_scannedText.length);
    console.log(g_scannedText[0].m_strText);
 
@@ -229,7 +229,7 @@ function onProjectSearchFinish(){
             }
         }
         console.log(alertString);
-        // alert("ProjectSearch finished")
+        alert("ProjectSearch finished")
         //alert(alertString);
 
         //matchBuilderAndProject();
@@ -282,10 +282,10 @@ function matchBuilderProjectTogether(){
              projectAlert += projectArray[projectIndex].m_entityName + "\n";
          }
 
-        //  alert(builderAlert);
+        alert(builderAlert);
          console.log(builderAlert);
 
-        // alert(projectAlert);
+        alert(projectAlert);
         console.log(projectAlert);
 
         var finalArray = [];
@@ -310,7 +310,7 @@ function matchBuilderProjectTogether(){
             finalProjectAlert += finalArray[projectIndex].m_builderName + " " +finalArray[projectIndex].m_entityName + "\n";
         }
 
-    //    alert(finalProjectAlert);
+       alert(finalProjectAlert);
        console.log(finalProjectAlert);
 
        if(finalArray.length == 0) throwError("No projects found");
