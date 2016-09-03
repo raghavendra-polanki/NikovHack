@@ -25,6 +25,7 @@ function sanitize (data) {
    
    g_scannedText = [];
    g_scannedTextBuilderPairs = { };
+   g_scannedTextProjectPairs = { };
    g_searchResponseIndex = 0;
    g_totalSearchResponses = 0;   
    
@@ -60,9 +61,9 @@ function sanitize (data) {
     }
     }
     
-    g_scannedText = g_scannedText.filter( function( item, index, inputArray ) {
-       return inputArray.indexOf(item) == index;
-    });     
+//    g_scannedText = g_scannedText.filter( function( item, index, inputArray ) {
+//       return inputArray.indexOf(item) == index;
+//    });     
    
    var heightFilteredText = [];
    heightFilteredText.push(g_scannedText[0]);
@@ -172,7 +173,7 @@ function onBuilderSearchFinish(){
 
 function searchProjectInMakan(query) {
     var url = "https://www.makaan.com/columbus/app/v5/typeahead?&typeAheadType=project\n\
-                    &rows=10&category=buy&view=buyer&query=" + query;
+                    &rows=50&category=buy&view=buyer&query=" + query;
 
 
     $.ajax({
@@ -244,22 +245,29 @@ function matchBuilderProjectTogether(){
         for(var query in g_scannedTextProjectPairs){
         
             var projData = g_scannedTextProjectPairs[query]; 
-            
+         loop2 :   
              for(var projDataIndex = 0; projDataIndex < projData.length; projDataIndex++){
                  
                  if(projData[projDataIndex].m_builderName.toLowerCase() === query.toLowerCase())
                  {
                      builderArray.push(projData[projDataIndex].m_builderName);
+                     //projectArray.push(projData[projDataIndex]);
                      break;
                  }
                  else if(projData[projDataIndex].m_entityName.toLowerCase() === query.toLowerCase())
                  {
                      projectArray.push(projData[projDataIndex]);
-                     break;
+                     //break;
                  }
                  else
                  {
-                     
+//                     var spliceArray = projData[projDataIndex].m_entityName.toLowerCase().split(" ");
+//                     for(var spliceIndex = 0; spliceIndex < spliceArray.length; spliceIndex++){
+//                         if(spliceArray[spliceIndex] === query.toLowerCase()){
+//                             projectArray.push(projData[projDataIndex]);
+//                             break loop2;
+//                         }
+//                     }                     
                  }
              }
          }
@@ -282,13 +290,19 @@ function matchBuilderProjectTogether(){
         
         var finalArray = [];
         
-        for(var builderIndex = 0; builderIndex < builderArray.length; builderIndex++){
-            for(var projectIndex = 0; projectIndex < projectArray.length; projectIndex++){
-                if(builderArray[builderIndex] == projectArray[projectIndex].m_builderName){
-                    finalArray.push(projectArray[projectIndex]);
-                }
-            }
+        if(builderArray.length == 0){
             
+            finalArray = projectArray;
+            
+        }else{
+            for(var builderIndex = 0; builderIndex < builderArray.length; builderIndex++){
+                for(var projectIndex = 0; projectIndex < projectArray.length; projectIndex++){
+                    if(builderArray[builderIndex] == projectArray[projectIndex].m_builderName){
+                        finalArray.push(projectArray[projectIndex]);
+                    }
+                }
+
+            }
         }
         
         var finalProjectAlert = "Final Projects : \n";
